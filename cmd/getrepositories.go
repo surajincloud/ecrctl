@@ -14,7 +14,7 @@ import (
 )
 
 // repositoriesCmd represents the repositories command
-var repositoriesCmd = &cobra.Command{
+var getRepositoriesCmd = &cobra.Command{
 	Use:   "repositories",
 	Short: "Get ECR repositories",
 	Long: `List ECR repositories
@@ -120,17 +120,8 @@ func repositories(cmd *cobra.Command, args []string) error {
 }
 
 func init() {
-	getCmd.AddCommand(repositoriesCmd)
+	getCmd.AddCommand(getRepositoriesCmd)
 	getCmd.PersistentFlags().String("region", "", "region")
 	getCmd.PersistentFlags().StringP("tag", "t", "", "tags")
 	getCmd.PersistentFlags().Bool("show-tags", false, "show tags")
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// repositoriesCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// repositoriesCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
