@@ -40,3 +40,9 @@ you can also use short flag `-t`
 ```
 ecrctl get repositories -t key=value
 ```
+
+* List images from a given repository
+
+```
+ecrctl get images --repo <repo-name>
+```
