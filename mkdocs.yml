@@ -1,0 +1,21 @@
+site_name: ecrctl
+site_url: https://surajincloud.github.io/ecrctl/
+site_author: Suraj Narwade
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+repo_name: surajincloud/ecrctl
+repo_url: https://github.com/surajincloud/ecrctl
