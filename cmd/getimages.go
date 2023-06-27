@@ -13,7 +13,7 @@ import (
 )
 
 // imagesCmd represents the images command
-var imagesCmd = &cobra.Command{
+var getImagesCmd = &cobra.Command{
 	Use:   "images",
 	Short: "Get ECR images",
 	Long: `List ECR images
@@ -50,14 +50,14 @@ func GetImages(cmd *cobra.Command, args []string) error {
 	}
 	w := tabwriter.NewWriter(os.Stdout, 5, 2, 3, ' ', tabwriter.TabIndent)
 	defer w.Flush()
-	fmt.Fprintln(w, "TAG", "\t", "CRITICAL", "\t", "HIGH", "\t", "MEDIUM", "\t", "SIZE", "\t", "AGE")
+	fmt.Fprintln(w, "TAG", "\t", "VULNERABILITIES", "\t", "SIZE", "\t", "AGE")
 	for _, i := range imageList {
-		fmt.Fprintln(w, i.Tag, "\t", i.CriticalVulnerability, "\t", i.HighVulnerability, "\t", i.MediumVulnerability, "\t", i.Size, "\t", i.Age)
+		fmt.Fprintln(w, i.Tag, "\t", fmt.Sprintf("C: %d, H: %d, M: %d", i.CriticalVulnerability, i.HighVulnerability, i.MediumVulnerability), "\t", i.Size, "\t", i.Age)
 	}
 	return nil
 }
 func init() {
-	getCmd.AddCommand(imagesCmd)
-	imagesCmd.PersistentFlags().String("region", "", "region")
-	imagesCmd.PersistentFlags().String("repo", "", "repo")
+	getCmd.AddCommand(getImagesCmd)
+	getImagesCmd.PersistentFlags().String("region", "", "region")
+	getImagesCmd.PersistentFlags().String("repo", "", "repo")
 }

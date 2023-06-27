@@ -5,51 +5,36 @@ import (
 	"fmt"
 	"sort"
 	"strings"
-	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/ecr"
 	"github.com/aws/aws-sdk-go-v2/service/ecr/types"
 	"github.com/docker/go-units"
-	"k8s.io/apimachinery/pkg/util/duration"
 )
 
-type RepositoriesTags struct {
-	Key, Value string
-}
+func DescribeImage(ctx context.Context, client *ecr.Client, imageName string, repoName string) (Image, error) {
+	imageList, err := ListImages(ctx, client, repoName)
+	if err != nil {
+		return Image{}, err
+	}
 
-type Repository struct {
-	Name             string
-	Arn              string
-	Uri              string
-	Age              string
-	CreatedAt        *time.Time
-	Tags             []RepositoriesTags
-	TagMutability    types.ImageTagMutability
-	EncryptionType   types.EncryptionType
-	EncryptionKMSKey string
-	ScanOnPush       bool
-}
-
-type Image struct {
-	Digest                string
-	Tag                   string
-	ArtifactMediaType     string
-	TagORDigest           string
-	CriticalVulnerability int32
-	HighVulnerability     int32
-	MediumVulnerability   int32
-	Age                   string
-	Size                  string
-}
-
-func GetAge(creationTime time.Time) string {
-
-	currentTime := time.Now()
-
-	age := currentTime.Sub(creationTime)
-
-	return duration.HumanDuration(age)
+	for _, i := range imageList {
+		if i.Tag == imageName {
+			scans, err := client.DescribeImageScanFindings(ctx, &ecr.DescribeImageScanFindingsInput{
+				RepositoryName: &repoName,
+				ImageId: &types.ImageIdentifier{
+					ImageTag: &imageName,
+				},
+			})
+			if err != nil {
+				fmt.Println("error while scan findings")
+			}
+			i.BasicScanFindings = scans.ImageScanFindings.Findings
+			i.EnhancedScanFindings = scans.ImageScanFindings.EnhancedFindings
+			return i, nil
+		}
+	}
+	return Image{}, nil
 }
 
 func ListImages(ctx context.Context, client *ecr.Client, repoName string) ([]Image, error) {
@@ -57,6 +42,7 @@ func ListImages(ctx context.Context, client *ecr.Client, repoName string) ([]Ima
 	describeImagesOutput, err := client.DescribeImages(ctx, &ecr.DescribeImagesInput{
 		RepositoryName: aws.String(repoName),
 	})
+
 	if err != nil {
 		return []Image{}, err
 	}
@@ -78,8 +64,8 @@ func ListImages(ctx context.Context, client *ecr.Client, repoName string) ([]Ima
 			} else {
 				tags = strings.Join(i.ImageTags, ",")
 			}
-			size := units.HumanSize(float64(*i.ImageSizeInBytes))
 
+			size := units.HumanSize(float64(*i.ImageSizeInBytes))
 			imageList = append(imageList, Image{
 				ArtifactMediaType:     *i.ArtifactMediaType,
 				Digest:                *i.ImageDigest,
@@ -89,6 +75,8 @@ func ListImages(ctx context.Context, client *ecr.Client, repoName string) ([]Ima
 				MediumVulnerability:   i.ImageScanFindingsSummary.FindingSeverityCounts["MEDIUM"],
 				Age:                   GetAge(*i.ImagePushedAt),
 				Size:                  size,
+				ScanStatus:            i.ImageScanStatus.Status,
+				ScanStatusDesc:        *i.ImageScanStatus.Description,
 			})
 		}
 	}
@@ -121,7 +109,6 @@ func ListRepos(ctx context.Context, client *ecr.Client) ([]Repository, error) {
 		if err != nil {
 			return []Repository{}, err
 		}
-		fmt.Println("type: ", i.ImageScanningConfiguration.ScanOnPush)
 		repoList = append(repoList, Repository{
 			Name:             aws.ToString(i.RepositoryName),
 			Arn:              aws.ToString(i.RepositoryArn),
