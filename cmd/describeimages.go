@@ -16,14 +16,13 @@ import (
 
 // imagesCmd represents the images command
 var describeImagesCmd = &cobra.Command{
-	Use:   "images",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Use:     "images",
+	Aliases: []string{"image"},
+	Short:   "describe an image",
+	Long: `describe an image and get more information
+	For example:
+		ecrctl describe images your-image --repo your-repo
+		`,
 	RunE: describeImages,
 }
 
@@ -71,12 +70,6 @@ func describeImages(cmd *cobra.Command, args []string) error {
 		fmt.Fprintln(w, *i.Name, "\t", i.Severity, "\t", *i.Uri)
 
 	}
-	// fmt.Println("enhanced")
-	// for _, i := range image.EnhancedScanFindings {
-	// 	fmt.Println("test")
-	// 	fmt.Fprintln(w, *i.Status, "\t", i.Severity, "\t", *i.ScoreDetails)
-
-	// }
 	return nil
 }
 
@@ -84,13 +77,4 @@ func init() {
 	describeCmd.AddCommand(describeImagesCmd)
 	describeImagesCmd.PersistentFlags().String("region", "", "region")
 	describeImagesCmd.PersistentFlags().String("repo", "", "repo")
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// imagesCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// imagesCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

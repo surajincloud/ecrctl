@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
@@ -14,9 +12,6 @@ var describeCmd = &cobra.Command{
 	For example:
 	
 	ecrctl describe repositories <repo-name>`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("describe called")
-	},
 }
 
 func init() {

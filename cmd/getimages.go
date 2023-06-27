@@ -14,8 +14,9 @@ import (
 
 // imagesCmd represents the images command
 var getImagesCmd = &cobra.Command{
-	Use:   "images",
-	Short: "Get ECR images",
+	Use:     "images",
+	Aliases: []string{"image"},
+	Short:   "Get ECR images",
 	Long: `List ECR images
     Examples:
 

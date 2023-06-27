@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
@@ -15,9 +13,6 @@ var getCmd = &cobra.Command{
     
 	ecrctl get repositories
 	`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("get called")
-	},
 }
 
 func init() {

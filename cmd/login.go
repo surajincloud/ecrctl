@@ -27,6 +27,8 @@ var loginCmd = &cobra.Command{
 	Long: `Login to ECR.
 	For example:
 	ecrctl login
+
+	ecrctl login --region your-region
     `,
 	RunE: Login,
 }

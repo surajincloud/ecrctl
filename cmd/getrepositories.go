@@ -15,8 +15,9 @@ import (
 
 // repositoriesCmd represents the repositories command
 var getRepositoriesCmd = &cobra.Command{
-	Use:   "repositories",
-	Short: "Get ECR repositories",
+	Use:     "repositories",
+	Short:   "Get ECR repositories",
+	Aliases: []string{"repo"},
 	Long: `List ECR repositories
     Examples:
 
@@ -86,7 +87,6 @@ func repositories(cmd *cobra.Command, args []string) error {
 				tagList = append(tagList, fmt.Sprintf("%s=%s", k.Key, k.Value))
 			}
 			tagsStringFormat := strings.Join(tagList, ",")
-			// fmt.Println("tagss are", tagsStringFormat)
 			if tags != "" {
 				if strings.Contains(tagsStringFormat, tags) {
 					fmt.Fprintln(w, i.Name, "\t", i.Uri)
@@ -105,7 +105,6 @@ func repositories(cmd *cobra.Command, args []string) error {
 				tagList = append(tagList, fmt.Sprintf("%s=%s", k.Key, k.Value))
 			}
 			tagsStringFormat := strings.Join(tagList, ",")
-			// fmt.Println("tagss are", tagsStringFormat)
 			if tags != "" {
 				if strings.Contains(tagsStringFormat, tags) {
 					fmt.Fprintln(w, i.Name, "\t", i.Uri, "\t", tagsStringFormat)
