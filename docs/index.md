@@ -1,8 +1,7 @@
 # Welcome
 
-`ecrctl` is kubectl plugin for amazon EKS.
+`ecrctl` is command line utility for [Amazon ECR](https://aws.amazon.com/ecr/).
 
-you can check out announcement blog post [here](https://surajincloud.com/announcing-ecrctl-plugin-v0-1-0).
 
 ## Installation
 
