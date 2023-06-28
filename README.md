@@ -1,5 +1,5 @@
 # ecrctl
-CLI tool for Amazon ECR
+CLI tool for Amazon ECR (inspired from kubectl)
 
 ## Usage
 
