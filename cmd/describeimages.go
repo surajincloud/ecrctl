@@ -34,6 +34,11 @@ func describeImages(cmd *cobra.Command, args []string) error {
 		fmt.Println("no region", err)
 	}
 
+	profile, err := cmd.Flags().GetString("profile")
+	if err != nil {
+		fmt.Println("no profile", err)
+	}
+
 	repoName, err := cmd.Flags().GetString("repo")
 	if err != nil {
 		fmt.Println("no repo", err)
@@ -48,7 +53,7 @@ func describeImages(cmd *cobra.Command, args []string) error {
 	imageName := args[0]
 
 	// aws config
-	cfg, err := awspkg.GetAWSConfig(ctx, region)
+	cfg, err := awspkg.GetAWSConfig(ctx, region, profile)
 	if err != nil {
 		return err
 	}
@@ -76,5 +81,6 @@ func describeImages(cmd *cobra.Command, args []string) error {
 func init() {
 	describeCmd.AddCommand(describeImagesCmd)
 	describeImagesCmd.PersistentFlags().String("region", "", "region")
+	describeImagesCmd.PersistentFlags().String("profile", "", "profile")
 	describeImagesCmd.PersistentFlags().String("repo", "", "repo")
 }
