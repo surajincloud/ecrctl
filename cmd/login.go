@@ -43,8 +43,13 @@ func Login(cmd *cobra.Command, args []string) error {
 		fmt.Println("no region", err)
 	}
 
+	profile, err := cmd.Flags().GetString("profile")
+	if err != nil {
+		fmt.Println("no profile", err)
+	}
+
 	// aws config
-	cfg, err := awspkg.GetAWSConfig(ctx, region)
+	cfg, err := awspkg.GetAWSConfig(ctx, region, profile)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -111,4 +116,5 @@ func Login(cmd *cobra.Command, args []string) error {
 func init() {
 	rootCmd.AddCommand(loginCmd)
 	loginCmd.PersistentFlags().String("region", "", "region")
+	loginCmd.PersistentFlags().String("profile", "", "profile")
 }

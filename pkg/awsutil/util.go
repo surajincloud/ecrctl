@@ -11,10 +11,18 @@ import (
 	"k8s.io/apimachinery/pkg/util/duration"
 )
 
-func GetAWSConfig(ctx context.Context, region string) (aws.Config, error) {
-	cfg, err := config.LoadDefaultConfig(ctx)
-	if err != nil {
-		return aws.Config{}, err
+func GetAWSConfig(ctx context.Context, region string, profile string) (cfg aws.Config, err error) {
+	if profile != "" {
+		cfg, err = config.LoadDefaultConfig(ctx, config.WithSharedConfigProfile(profile))
+		if err != nil {
+			return aws.Config{}, err
+		}
+
+	} else {
+		cfg, err = config.LoadDefaultConfig(ctx)
+		if err != nil {
+			return aws.Config{}, err
+		}
 	}
 	if cfg.Region == "" {
 		// get region

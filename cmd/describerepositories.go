@@ -33,6 +33,11 @@ func describeRepo(cmd *cobra.Command, args []string) error {
 		fmt.Println("no region", err)
 	}
 
+	profile, err := cmd.Flags().GetString("profile")
+	if err != nil {
+		fmt.Println("no profile", err)
+	}
+
 	if len(args) == 0 {
 		fmt.Println("please pass repo name")
 		os.Exit(1)
@@ -42,7 +47,7 @@ func describeRepo(cmd *cobra.Command, args []string) error {
 	repoName := args[0]
 
 	// aws config
-	cfg, err := awspkg.GetAWSConfig(ctx, region)
+	cfg, err := awspkg.GetAWSConfig(ctx, region, profile)
 	if err != nil {
 		return err
 	}
@@ -76,4 +81,5 @@ func TagsToString(repoTagList []awspkg.RepositoriesTags) string {
 func init() {
 	describeCmd.AddCommand(describeRepositoriesCmd)
 	describeCmd.PersistentFlags().String("region", "", "region")
+	describeCmd.PersistentFlags().String("profile", "", "profile")
 }

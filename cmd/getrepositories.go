@@ -46,6 +46,11 @@ func repositories(cmd *cobra.Command, args []string) error {
 		fmt.Println("no region", err)
 	}
 
+	profile, err := cmd.Flags().GetString("profile")
+	if err != nil {
+		fmt.Println("no profile", err)
+	}
+
 	tags, err := cmd.Flags().GetString("tag")
 	if err != nil {
 		fmt.Println("no tags", err)
@@ -57,7 +62,7 @@ func repositories(cmd *cobra.Command, args []string) error {
 	}
 
 	// aws config
-	cfg, err := awspkg.GetAWSConfig(ctx, region)
+	cfg, err := awspkg.GetAWSConfig(ctx, region, profile)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -121,6 +126,7 @@ func repositories(cmd *cobra.Command, args []string) error {
 func init() {
 	getCmd.AddCommand(getRepositoriesCmd)
 	getCmd.PersistentFlags().String("region", "", "region")
+	getCmd.PersistentFlags().String("profile", "", "profile")
 	getCmd.PersistentFlags().StringP("tag", "t", "", "tags")
 	getCmd.PersistentFlags().Bool("show-tags", false, "show tags")
 }
