@@ -68,8 +68,8 @@ func deleteRepo(cmd *cobra.Command, args []string) error {
 }
 func init() {
 	deleteCmd.AddCommand(deleteRepoCmd)
-	deleteCmd.PersistentFlags().String("region", "", "region")
-	deleteCmd.PersistentFlags().String("profile", "", "profile")
-	deleteCmd.PersistentFlags().String("repo", "", "repo")
+	deleteRepoCmd.PersistentFlags().String("region", "", "region")
+	deleteRepoCmd.PersistentFlags().String("profile", "", "profile")
+	deleteRepoCmd.PersistentFlags().String("repo", "", "repo")
 
 }

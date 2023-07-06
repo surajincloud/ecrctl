@@ -125,8 +125,8 @@ func repositories(cmd *cobra.Command, args []string) error {
 
 func init() {
 	getCmd.AddCommand(getRepositoriesCmd)
-	getCmd.PersistentFlags().String("region", "", "region")
-	getCmd.PersistentFlags().String("profile", "", "profile")
-	getCmd.PersistentFlags().StringP("tag", "t", "", "tags")
-	getCmd.PersistentFlags().Bool("show-tags", false, "show tags")
+	getRepositoriesCmd.PersistentFlags().String("region", "", "region")
+	getRepositoriesCmd.PersistentFlags().String("profile", "", "profile")
+	getRepositoriesCmd.PersistentFlags().StringP("tag", "t", "", "tags")
+	getRepositoriesCmd.PersistentFlags().Bool("show-tags", false, "show tags")
 }
