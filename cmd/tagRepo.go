@@ -89,6 +89,6 @@ func init() {
 	tagRepoCmd.PersistentFlags().String("region", "", "region")
 	tagRepoCmd.PersistentFlags().String("profile", "", "profile")
 	tagRepoCmd.PersistentFlags().String("repo", "", "repo")
-	getCmd.PersistentFlags().StringP("tag", "t", "", "tags")
+	tagRepoCmd.PersistentFlags().StringP("tag", "t", "", "tags")
 
 }
