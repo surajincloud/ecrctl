@@ -7,7 +7,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/config v1.18.27
 	github.com/aws/aws-sdk-go-v2/service/ecr v1.18.13
 	github.com/docker/cli v24.0.2+incompatible
-	github.com/docker/docker v24.0.2+incompatible
+	github.com/docker/docker v24.0.4+incompatible
 	github.com/docker/go-units v0.5.0
 	github.com/spf13/cobra v1.7.0
 	k8s.io/apimachinery v0.27.3
