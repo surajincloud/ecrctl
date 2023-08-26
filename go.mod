@@ -3,7 +3,7 @@ module github.com/surajincloud/ecrctl
 go 1.20
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.18.1
+	github.com/aws/aws-sdk-go-v2 v1.20.3
 	github.com/aws/aws-sdk-go-v2/config v1.18.27
 	github.com/aws/aws-sdk-go-v2/service/ecr v1.18.13
 	github.com/docker/cli v24.0.2+incompatible
@@ -24,7 +24,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sso v1.12.12 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.14.12 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.19.2 // indirect
-	github.com/aws/smithy-go v1.13.5 // indirect
+	github.com/aws/smithy-go v1.14.2 // indirect
 	github.com/docker/distribution v2.8.2+incompatible // indirect
 	github.com/docker/docker-credential-helpers v0.7.0 // indirect
 	github.com/docker/go-connections v0.4.0 // indirect
