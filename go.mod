@@ -3,7 +3,7 @@ module github.com/surajincloud/ecrctl
 go 1.20
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.20.3
+	github.com/aws/aws-sdk-go-v2 v1.21.0
 	github.com/aws/aws-sdk-go-v2/config v1.18.27
 	github.com/aws/aws-sdk-go-v2/service/ecr v1.18.13
 	github.com/docker/cli v24.0.2+incompatible
